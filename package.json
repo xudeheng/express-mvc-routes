@@ -1,7 +1,7 @@
 {
   "name": "mvc-routes-for-express",
   "description": "Simple binding controllers to routes",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "repository": {
     "type": "git",

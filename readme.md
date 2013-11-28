@@ -8,8 +8,8 @@
 ## API
 
     new Routes({
-      url: String,
-      controller: Function,
+      url: String of Array of Strings,
+      [controller: Function],
       [method: String],
       [middlewares: Function or Array of Function]
     });
@@ -63,6 +63,13 @@ new Route({
   url: '/analytics',
   controllers: controllers.something()
 });
+
+new Route({
+  method: 'all',
+  url: [routes.projects, routes.projects+'/*'],
+  middlewares: checkAuth
+});
+
 
 
 // And start your app.
