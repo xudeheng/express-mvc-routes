@@ -11,18 +11,28 @@ var Route = function (options, app) {
 
 
 Route.prototype.createRoute = function(options) {
+
+  options ? this.unfoldOptions : this.throwError('Expected `options`.');
+  
   this.isValidOptions(options)
-    ? this.app.get(
+    ? this.app[options.method.toLover || 'get'](
         options.url,
         options.middlewares || [],
         options.controller
       )
-    : this.throwError();
+    : this.throwError('Wrong `url` or `controller`.');
+
 };
 
 
-Route.prototype.throwError = function() {
-  throw new Error('Wrong `url` or `controller`.');
+Route.prototype.throwError = function(msg) {
+  throw new Error(msg);
+};
+
+
+Route.prototype.unfoldOptions = function(o) {
+  o.method = o.method && o.method.toLowerCase() || 'get';
+  o.middlewares = o.middlewares || [];
 };
 
 

@@ -5,6 +5,15 @@
 
     npm i --save mvc-routes-for-express
 
+## API
+
+    new Routes({
+      url: String,
+      controller: Function,
+      [method: String],
+      [middlewares: Function or Array of Function]
+    });
+
 
 ## Example  
 
@@ -43,15 +52,16 @@ new Route({
 });
 
 new Route({
+  method: 'get',
   url: '/admin',
   middlewares: middlewares.auth,
   controllers: controllers.render('admin')
 });
 
 new Route({
+  method: 'post',
   url: '/analytics',
-  middlewares: middlewares.auth, middlewares.setupLocals
-  controllers: controllers.render('analytics')
+  controllers: controllers.something()
 });
 
 
