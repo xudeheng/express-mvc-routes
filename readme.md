@@ -3,7 +3,7 @@
 
 ## Install
 
-    npm i --save express-mvc-router
+    npm i --save express-mvc-routes
 
 
 ## Example
