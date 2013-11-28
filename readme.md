@@ -3,7 +3,7 @@
 
 ## Install
 
-    npm i --save express-mvc-routes
+    npm i --save mvc-routes-for-express
 
 
 ## Example
@@ -18,7 +18,7 @@
     var routes         = require('./routes');
     var controllers    = require('./controllers/');
     var middlewares    = require('./middlewares/');
-    var RouteConstr    = require('express-mvc-routes');
+    var RouteConstr    = require('mvc-routes-for-express');
 
 
     var app            = express();
