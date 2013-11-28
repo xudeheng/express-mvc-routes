@@ -7,11 +7,25 @@
 
 ## API
 
+    // Create route:
     new Routes({
-      url: String of Array of Strings,
+      url: String or Array of Strings,
       [controller: Function],
       [method: String],
       [middlewares: Function or Array of Function]
+    });
+
+
+    // CRUD Support:
+    new Route.CRUD({
+      url: String or Array of Strings,
+      [middlewares: Function or Array of Function],
+      controller: {
+        [create: Function],
+        [read: Function],
+        [update: Function],
+        [del: Function],
+      }
     });
 
 
@@ -70,6 +84,26 @@ new Route({
   middlewares: checkAuth
 });
 
+
+new Route.CRUD({
+  url: routes.users,
+  middlewares: checkAuth,
+  controller: {
+    create: controllers.users.create,
+    read: controllers.users.read
+  }
+});
+
+
+new Route.CRUD({
+  url: routes.user,
+  middlewares: checkAuth,
+  controller: {
+    update: controllers.users.update,
+    read: controllers.users.read,
+    del: controllers.users.del
+  }
+});
 
 
 // And start your app.

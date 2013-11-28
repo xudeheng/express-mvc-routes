@@ -62,6 +62,30 @@ Route.prototype.isValidOptions = function(options) {
 };
 
 
+// Static constructor for CRUD
+Route.CRUD = function(options, map) {
+  
+  map = map || {
+    create: 'post',
+    read: 'get',
+    update: 'put',
+    del: 'del'
+  };
+
+  var _options = options;
+  var keys = Object.keys(map);
+
+  for (var i = keys.length - 1; i >= 0; i--) {
+    var controller = options.controller[keys[i]];
+    if (!controller) continue;
+    _options.controller = controller;
+    _options.method = map[keys[i]];
+    new Route(_options);
+  }
+
+};
+
+
 module.exports = function (app) {
   Route.prototype.app = app;
   return Route;
