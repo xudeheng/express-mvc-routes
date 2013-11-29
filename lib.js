@@ -28,7 +28,6 @@ Route.prototype.appendToApp = function(options) {
   var method = options.method;
 
   for (var i = options.url.length - 1; i >= 0; i--) {
-    console.log('app.'+options.method+'('+options.url[i]+')');
     options.controller
       ? this.app[method](
           options.url[i],
