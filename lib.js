@@ -28,7 +28,7 @@ Route.prototype.appendToApp = function(options) {
   var method = options.method;
 
   for (var i = options.url.length - 1; i >= 0; i--) {
-    
+    console.log('app.'+options.method+'('+options.url[i]+')');
     options.controller
       ? this.app[method](
           options.url[i],
@@ -63,22 +63,22 @@ Route.prototype.isValidOptions = function(options) {
 
 
 // Static constructor for CRUD
-Route.CRUD = function(options, map) {
-  
-  map = map || {
+Route.CRUD = function(options) {
+
+  var map = {
     create: 'post',
     read: 'get',
     update: 'put',
     del: 'del'
   };
-
-  var _options = options;
   var keys = Object.keys(map);
+  var _options = {};
 
   for (var i = keys.length - 1; i >= 0; i--) {
-    var controller = options.controller[keys[i]];
-    if (!controller) continue;
-    _options.controller = controller;
+    if (!options.controller[keys[i]]) continue;
+    _options.url = options.url;
+    _options.middlewares = options.middlewares;
+    _options.controller = options.controller[keys[i]];
     _options.method = map[keys[i]];
     new Route(_options);
   }
