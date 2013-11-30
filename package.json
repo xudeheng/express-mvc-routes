@@ -10,7 +10,8 @@
   "devDependencies": {
     "express": "*",
     "mocha": "*",
-    "supertest": "*"
+    "supertest": "*",
+    "next-done": "~0.1.0"
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "lib.js",
@@ -19,6 +20,9 @@
     "routes",
     "mvc"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/shuvalov-anton/express-mvc-routes/issues"
   }

@@ -10,6 +10,7 @@ var controllers    = require('../support/controllers');
 var middlewares    = require('../support/middlewares');
 var request        = require('supertest');
 var assert         = require('assert');
+var Countdown      = require('next-done');
 var Route          = require('../lib/route.js')(app);
 
 // End of dependencies.
@@ -55,12 +56,7 @@ describe('new Route()', function(){
       controller: controllers.sendLocalMsg(200)
     });
 
-    var counter = route.url.length;
-    var next = function() {
-      --counter
-        ? null
-        : done();
-    };
+    var next = new Countdown(route.url.length, done);
 
 
     request(app)
@@ -69,8 +65,6 @@ describe('new Route()', function(){
       .expect(200)
       .end(function(err, res) {
         if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
         next();
     });
 
@@ -80,8 +74,6 @@ describe('new Route()', function(){
       .expect(200)
       .end(function(err, res) {
         if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
         next();
     });
 
@@ -157,9 +149,6 @@ describe('new Route()', function(){
   });
 
 
-
-
-
   /**
    *  .url[] + .middleware[] + .controller
    */
@@ -179,13 +168,7 @@ describe('new Route()', function(){
       }
     });
 
-    var counter = Object.keys(route.controller).length;
-    var next = function() {
-      --counter
-        ? null
-        : done();
-    };
-
+    var next = new Countdown(Object.keys(route.controller).length, done);
 
     request(app)
       .get('/crud')

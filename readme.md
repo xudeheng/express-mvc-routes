@@ -1,5 +1,7 @@
 # Simple MVC Router for Express.js
 
+[![Build Status](https://secure.travis-ci.org/shuvalov-anton/next-done.png)](http://travis-ci.org/shuvalov-anton/next-done)
+
 
 ## Install
 
