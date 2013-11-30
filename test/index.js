@@ -11,7 +11,7 @@ var middlewares    = require('../support/middlewares');
 var request        = require('supertest');
 var assert         = require('assert');
 var Countdown      = require('next-done');
-var Route          = require('../lib/')(app);
+var Route          = require('../')(app);
 
 // End of dependencies.
 
