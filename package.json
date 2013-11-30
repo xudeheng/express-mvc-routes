@@ -7,6 +7,11 @@
     "type": "git",
     "url": "https://github.com/shuvalov-anton/express-mvc-routes.git"
   },
+  "devDependencies": {
+    "express": "*",
+    "mocha": "*",
+    "supertest": "*"
+  },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "lib.js",
   "keywords": [
