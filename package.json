@@ -1,11 +1,17 @@
 {
   "name": "express-mvc-routes",
   "description": "Simple binding controllers to routes",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/shuvalov-anton/express-mvc-routes.git"
+  },
+  "devDependencies": {
+    "express": "*",
+    "mocha": "*",
+    "supertest": "*",
+    "next-done": "*"
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "lib.js",
@@ -14,6 +20,9 @@
     "routes",
     "mvc"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "bugs": {
     "url": "https://github.com/shuvalov-anton/express-mvc-routes/issues"
   }
