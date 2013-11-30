@@ -11,7 +11,7 @@ var middlewares    = require('../support/middlewares');
 var request        = require('supertest');
 var assert         = require('assert');
 var Countdown      = require('next-done');
-var Route          = require('../lib/route.js')(app);
+var Route          = require('../lib/')(app);
 
 // End of dependencies.
 
@@ -34,7 +34,7 @@ describe('new Route()', function(){
   it('Must returns 200', function(done){
     
     new Route({
-      url: '/plain',
+      urls: '/plain',
       controller: controllers.send(200)
     });
 
@@ -52,11 +52,11 @@ describe('new Route()', function(){
 
 
     var route = new Route({
-      url: ['/plain/multiple/url/1','/plain/multiple/url/2'],
+      urls: ['/plain/multiple/url/1','/plain/multiple/url/2'],
       controller: controllers.sendLocalMsg(200)
     });
 
-    var next = new Countdown(route.url.length, done);
+    var next = new Countdown(route.urls.length, done);
 
 
     request(app)
@@ -87,7 +87,7 @@ describe('new Route()', function(){
     
     new Route({
       method: 'post',
-      url: '/plain/post',
+      urls: '/plain/post',
       controller: controllers.send(200)
     });
 
@@ -103,7 +103,7 @@ describe('new Route()', function(){
   it('Must returns 200 and res.body must contains "Hello"', function(done){
     
     new Route({
-      url: '/plain/middleware',
+      urls: '/plain/middleware',
       middlewares: middlewares.addLocalMsg('Hello'),
       controller: controllers.sendLocalMsg(200)
     });
@@ -127,7 +127,7 @@ describe('new Route()', function(){
   it('Must returns 200 and res.body must contains ["Hello", "World"]', function(done){
     
     new Route({
-      url: '/plain/middlewares',
+      urls: '/plain/middlewares',
       middlewares: [
         middlewares.addLocalMsg('Hello'),
         middlewares.addLocalMsg('World')
@@ -155,12 +155,12 @@ describe('new Route()', function(){
   it('Must returns 200 for all CRUD map', function(done){
 
     var route = new Route.CRUD({
-      url: '/crud',
+      urls: '/crud',
       middlewares: [
         middlewares.addLocalMsg('Hello'),
         middlewares.addLocalMsg('World')
       ],
-      controller: {
+      controllers: {
         create: controllers.sendLocalMsg(200),
         read: controllers.sendLocalMsg(200),
         update: controllers.sendLocalMsg(200),
@@ -168,7 +168,7 @@ describe('new Route()', function(){
       }
     });
 
-    var next = new Countdown(Object.keys(route.controller).length, done);
+    var next = new Countdown(Object.keys(route.controllers).length, done);
 
     request(app)
       .get('/crud')

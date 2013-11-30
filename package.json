@@ -11,7 +11,7 @@
     "express": "*",
     "mocha": "*",
     "supertest": "*",
-    "next-done": "~0.1.0"
+    "next-done": "*"
   },
   "author": "Anton Shuvalov <anton_shuvalov@me.com> (http://anton-shuvalov.info)",
   "main": "lib.js",
