@@ -43,6 +43,51 @@ describe('new Route()', function(){
   
   });
 
+
+    /**
+   *  .url[] + .controller
+   */
+  it('Must returns 200 ', function(done){
+
+
+    var route = new Route({
+      url: ['/plain/multiple/url/1','/plain/multiple/url/2'],
+      controller: controllers.sendLocalMsg(200)
+    });
+
+    var counter = route.url.length;
+    var next = function() {
+      --counter
+        ? null
+        : done();
+    };
+
+
+    request(app)
+      .get('/plain/multiple/url/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        assert('Hello' === res.body[0]);
+        assert('World' === res.body[1]);
+        next();
+    });
+
+    request(app)
+      .get('/plain/multiple/url/2')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) throw err;
+        assert('Hello' === res.body[0]);
+        assert('World' === res.body[1]);
+        next();
+    });
+
+  });
+
+
     /**
    *  .url + .method + .controller
    */
@@ -84,8 +129,6 @@ describe('new Route()', function(){
   });
 
 
-
-
   /**
    *  .url + .middleware[] + .controller
    */
@@ -114,53 +157,7 @@ describe('new Route()', function(){
   });
 
 
-  /**
-   *  .url[] + .middleware[] + .controller
-   */
-  it('Must returns 200 and res.body must contains ["Hello", "World"]', function(done){
 
-
-
-    var route = new Route({
-      url: ['/plain/multiple/url/1','/plain/multiple/url/2'],
-      middlewares: [
-        middlewares.addLocalMsg('Hello'),
-        middlewares.addLocalMsg('World')
-      ],
-      controller: controllers.sendLocalMsg(200)
-    });
-
-    var counter = route.url.length;
-    var next = function() {
-      --counter
-        ? null
-        : done();
-    };
-
-
-    request(app)
-      .get('/plain/multiple/url/1')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
-
-    request(app)
-      .get('/plain/multiple/url/2')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
-
-  });
 
 
   /**
