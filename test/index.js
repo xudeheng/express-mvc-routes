@@ -33,13 +33,13 @@ describe('new Route()', function(){
    */
   it('Must returns 200', function(done){
     
-    new Route({
+    var route = new Route({
       urls: '/plain',
       controller: controllers.send(200)
     });
 
     request(app)
-      .get('/plain')
+      .get(route.urls[0])
       .expect(200, done);
   
   });
@@ -58,64 +58,108 @@ describe('new Route()', function(){
 
     var next = new Countdown(route.urls.length, done);
 
-
-    request(app)
-      .get('/plain/multiple/url/1')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res) {
-        if (err) throw err;
-        next();
-    });
-
-    request(app)
-      .get('/plain/multiple/url/2')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function(err, res) {
-        if (err) throw err;
-        next();
-    });
+    for (var key in route.urls) {
+      var url = route.urls[key];
+      request(app)
+        .get(route.urls[0])
+        .expect(200, next);
+    }
 
   });
 
 
     /**
-   *  .url + .method + .controller
+   *  .method = 'get'
    */
   it('Must returns 200', function(done){
-    
-    new Route({
+
+    var route = new Route({
+      method: 'get',
+      urls: '/plain/get',
+      controller: controllers.send(200)
+    });
+
+    request(app)
+      [route.method](route.urls[0])
+      .expect(200, done);
+  
+  });
+
+
+    /**
+   *  .method = 'post'
+   */
+  it('Must returns 200', function(done){
+
+    var route = new Route({
       method: 'post',
       urls: '/plain/post',
       controller: controllers.send(200)
     });
 
     request(app)
-      .post('/plain/post')
+      [route.method](route.urls[0])
       .expect(200, done);
   
   });
+
+
+    /**
+   *  .method = 'put'
+   */
+  it('Must returns 200', function(done){
+
+    var route = new Route({
+      method: 'put',
+      urls: '/plain/put',
+      controller: controllers.send(200)
+    });
+
+    request(app)
+      [route.method](route.urls[0])
+      .expect(200, done);
+  
+  });
+
+
+    /**
+   *  .method = 'del'
+   */
+  it('Must returns 200', function(done){
+
+    var route = new Route({
+      method: 'del',
+      urls: '/plain/del',
+      controller: controllers.send(200)
+    });
+
+    request(app)
+      [route.method](route.urls[0])
+      .expect(200, done);
+  
+  });
+
 
   /**
    *  .url + .middleware + .controller
    */
   it('Must returns 200 and res.body must contains "Hello"', function(done){
     
-    new Route({
+    var route = new Route({
       urls: '/plain/middleware',
       middlewares: middlewares.addLocalMsg('Hello'),
       controller: controllers.sendLocalMsg(200)
     });
 
     request(app)
-      .get('/plain/middleware')
+      .get(route.urls[0])
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        done();
+        err
+          ? done(err)
+          : assert('Hello' === res.body[0]),
+            done();
     });
   
   });
@@ -140,17 +184,18 @@ describe('new Route()', function(){
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        done();
-    });
+        err
+          ? done(err)
+          : assert('Hello' === res.body[0]),
+            assert('World' === res.body[1]),
+            done();
+      });
   
   });
 
 
   /**
-   *  .url[] + .middleware[] + .controller
+   *  .CRUD
    */
   it('Must returns 200 for all CRUD map', function(done){
 
@@ -175,44 +220,48 @@ describe('new Route()', function(){
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
+        err
+          ? next(err)
+          : assert('Hello' === res.body[0]),
+            assert('World' === res.body[1]),
+            next();
+      });
 
     request(app)
       .post('/crud')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
+        err
+          ? next(err)
+          : assert('Hello' === res.body[0]),
+            assert('World' === res.body[1]),
+            next();
+      });
 
     request(app)
       .put('/crud')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
+        err
+          ? next(err)
+          : assert('Hello' === res.body[0]),
+            assert('World' === res.body[1]),
+            next();
+      });
 
     request(app)
       .post('/crud')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
-        if (err) throw err;
-        assert('Hello' === res.body[0]);
-        assert('World' === res.body[1]);
-        next();
-    });
+        err
+          ? next(err)
+          : assert('Hello' === res.body[0]),
+            assert('World' === res.body[1]),
+            next();
+      });
 
   });
 
