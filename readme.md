@@ -1,7 +1,7 @@
 # Simple MVC Router for Express.js
 
 [![Build Status](https://secure.travis-ci.org/shuvalov-anton/next-done.png)](http://travis-ci.org/shuvalov-anton/next-done)
-
+[![Code Climate](https://codeclimate.com/github/shuvalov-anton/express-mvc-routes.png)](https://codeclimate.com/github/shuvalov-anton/express-mvc-routes)
 
 ## Install
 
